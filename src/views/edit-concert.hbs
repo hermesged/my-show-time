@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Concert</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-[#0A0614] text-white font-sans min-h-screen flex items-center justify-center py-16 px-6">
+    <div class="w-full max-w-3xl bg-[#141020] p-10 rounded-2xl shadow-2xl">
+      <h1 class="text-3xl font-bold mb-8 text-center text-[#A259FF]">
+        &#127925; Edit Concert
+      </h1>
+
+      <form action="/concerts/{{concert._id}}/update" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-semibold mb-2">Title</label>
+            <input type="text" name="title" value="{{concert.title}}" class="w-full px-4 py-2 rounded-lg bg-[#1F1B2E] text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#A259FF]" required />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-2">Genre</label>
+            <input type="text" name="genre" value="{{concert.genre}}" class="w-full px-4 py-2 rounded-lg bg-[#1F1B2E] text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#A259FF]" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-2">Date</label>
+            <input type="date" name="date" value="{{concert.date}}" class="w-full px-4 py-2 rounded-lg bg-[#1F1B2E] text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#A259FF]" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-2">Location</label>
+            <input type="text" name="location" value="{{concert.location}}" class="w-full px-4 py-2 rounded-lg bg-[#1F1B2E] text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#A259FF]" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-2">Price (XOF)</label>
+            <input type="number" name="price" value="{{concert.price}}" class="w-full px-4 py-2 rounded-lg bg-[#1F1B2E] text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#A259FF]" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-2">Available Seats</label>
+            <input type="number" name="available_seats" value="{{concert.available_seats}}" class="w-full px-4 py-2 rounded-lg bg-[#1F1B2E] text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#A259FF]" />
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-semibold mb-2">Guest Artists</label>
+            <input type="text" name="guest_artists" value="{{concert.guest_artists}}" placeholder="Ex: Fanicko, Davido, Ayra Starr" class="w-full px-4 py-2 rounded-lg bg-[#1F1B2E] text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#A259FF]" />
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-semibold mb-2">Main Artist</label>
+            <select id="band_id" name="band_id" class="w-full px-4 py-3 rounded-xl bg-[#141020] text-white focus:ring-2 focus:ring-[#A259FF] border border-gray-700">
+              <option value="">-- Select an artist --</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-semibold mb-2">Upload New Image</label>
+            <input type="file" name="image" accept="image/*" class="w-full bg-[#1E1A2B] border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A259FF]" />
+            <p class="text-sm text-gray-400 mt-2">Current image: {{concert.image}}</p>
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-semibold mb-2">Description</label>
+            <textarea name="description" rows="4" class="w-full px-4 py-2 rounded-lg bg-[#1F1B2E] text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#A259FF]">{{concert.description}}</textarea>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center pt-6">
+          <a href="/concerts" class="text-gray-400 hover:text-white transition">← Cancel</a>
+          <button type="submit" class="bg-gradient-to-r from-[#A259FF] to-[#6100FF] px-8 py-3 rounded-full text-white font-semibold hover:opacity-90 transition">Update</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      // Load artists from backend and pre-select the current one
+      fetch('/artistes/')
+        .then(res => res.json())
+        .then(data => {
+          const select = document.getElementById('band_id');
+          data.forEach(artist => {
+            const option = document.createElement('option');
+            option.value = artist._id;
+            option.textContent = artist.name;
+            if(artist._id === '{{concert.band_id}}') option.selected = true;
+            select.appendChild(option);
+          });
+        })
+        .catch(err => console.error('Error loading artists:', err));
+    </script>
+  </body>
+</html>

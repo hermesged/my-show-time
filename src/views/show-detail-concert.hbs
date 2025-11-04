@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-[#0A0614] text-white font-sans">
+     {{> navBar
+     }}
+    <section class="relative h-[60vh]">
+      <img
+        src="https://images.unsplash.com/photo-1603190287605-e6ade32fa852?auto=format&fit=crop&w=1400&q=80"
+        {{!-- src="{{concert.image}}" --}}
+        alt="Event"
+        class="w-full h-full object-cover"
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-[#0A0614] via-black/60 to-transparent"
+      ></div>
+      <div
+        class="absolute bottom-10 left-8 md:left-20 max-w-3xl space-y-2"
+      >
+        <p class="text-[#A259FF] uppercase tracking-widest text-sm font-semibold">
+          Exclusive Event
+        </p>
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight">
+          {{concert.title}}
+        </h1>
+        <p class="text-gray-300 max-w-lg">
+          {{concert.genre}}
+        </p>
+      </div>
+    </section>
+
+    <!-- DETAILS -->
+    <section class="px-6 md:px-20 py-16 grid md:grid-cols-3 gap-12">
+
+      <div class="md:col-span-2 space-y-10">
+        <!-- Info -->
+        <div class="bg-[#141020] p-8 rounded-2xl shadow-lg space-y-4">
+          <h2 class="text-2xl font-semibold mb-4">General Information</h2>
+          <div class="grid sm:grid-cols-2 gap-4 text-gray-300 text-sm">
+            <div class="flex items-center gap-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 text-[#A259FF]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8v4l3 3m6 1a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>{{formatDate concert.date}}</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 text-[#A259FF]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17.657 16.657L13.414 12.414m0 0A4 4 0 1112 8a4 4 0 011.414 4.414zm0 0L21 21"
+                />
+              </svg>
+              <span>{{concert.location}}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="bg-[#141020] p-8 rounded-2xl shadow-lg">
+          <h2 class="text-2xl font-semibold mb-4">About the Event</h2>
+          <p class="text-gray-300 leading-relaxed">
+            {{concert.description}}
+          </p>
+        </div>
+
+        <!-- Guests -->
+        <div class="bg-[#141020] p-8 rounded-2xl shadow-lg">
+          <h2 class="text-2xl font-semibold mb-4">Guest Artists</h2>
+          <div class="flex flex-wrap gap-6">
+            <div class="text-center">
+              <p class="text-sm text-gray-400">{{concert.guest_artists}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     <!-- Right Sidebar -->
+    <aside class="space-y-8">
+      <div class="bg-[#141020] p-8 rounded-2xl shadow-lg">
+        <h3 class="text-xl font-semibold mb-4">Ticket Booking</h3>
+        <div
+          class="border-t border-gray-700 mt-6 pt-6 flex items-center justify-between">
+          <p class="text-lg font-semibold">Price</p>
+          <p class="text-3xl font-bold text-[#A259FF]">{{concert.price}} XOF</p>
+        </div>
+      </div>
+
+      <!-- Concert Image -->
+      <div class="bg-[#141020] p-4 rounded-2xl shadow-lg">
+        <img
+          src="{{concert.image}}"
+          alt="{{concert.title}}"
+          class="w-full h-48 object-cover rounded-lg"
+        />
+      </div>
+
+      <!-- Payment Button -->
+       {{#if user}}
+      <div class="sticky bottom-10">
+        <form action="/bookings" method="post">
+          <input type="hidden" name="totalPrice" value="{{concert.price}}">
+          <input type="hidden" name="concertId" value="{{concert._id}}">
+          <input type="hidden" name="ticketsCount" value="1">
+          <button type="submit"
+            class="w-full bg-gradient-to-r from-[#A259FF] to-[#6100FF] py-4 text-lg font-semibold rounded-full shadow-lg hover:opacity-90 transition">
+            Proceed to Payment →
+          </button>
+        </form>
+        {{!-- <a href="/payments/pay"
+          class="w-full bg-gradient-to-r from-[#A259FF] to-[#6100FF] py-4 text-lg font-semibold rounded-full shadow-lg hover:opacity-90 transition">
+          Proceed to Payment →
+        </a> --}}
+      </div>
+      {{/if}}
+    </aside>
+
+    </section>
+
+    {{> footer
+     }}
+  </body>
+</html>

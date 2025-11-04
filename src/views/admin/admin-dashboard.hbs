@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0b0215] text-white min-h-screen flex">
+
+  {{> asideAdmin
+     }}
+
+  <div class="flex-1 flex flex-col">
+    
+    <header class="flex justify-end items-center bg-[#141020] p-6 border-b border-fuchsia-700/20">
+      <span class="font-semibold text-gray-300">
+        admin {{currentAdmin.name}}
+      </span>
+    </header>
+
+    <main class="p-8 flex-1 overflow-auto">
+      <h2 class="text-3xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-indigo-500">
+        Dashboard
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-[#12052b] rounded-2xl p-6 shadow-lg border border-fuchsia-700/20 flex flex-col items-center">
+          <span class="text-4xl font-bold text-fuchsia-500">{{stats.users}}</span>
+          <span class="text-gray-400 mt-2">Users</span>
+        </div>
+
+        <div class="bg-[#12052b] rounded-2xl p-6 shadow-lg border border-indigo-700/20 flex flex-col items-center">
+          <span class="text-4xl font-bold text-indigo-500">{{stats.artists}}</span>
+          <span class="text-gray-400 mt-2">Artists</span>
+        </div>
+
+        <div class="bg-[#12052b] rounded-2xl p-6 shadow-lg border border-green-700/20 flex flex-col items-center">
+          <span class="text-4xl font-bold text-green-500">{{stats.concerts}}</span>
+          <span class="text-gray-400 mt-2">Concerts</span>
+        </div>
+
+        <div class="bg-[#12052b] rounded-2xl p-6 shadow-lg border border-yellow-700/20 flex flex-col items-center">
+          <span class="text-4xl font-bold text-yellow-500">{{stats.bookings}}</span>
+          <span class="text-gray-400 mt-2">Tickets</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

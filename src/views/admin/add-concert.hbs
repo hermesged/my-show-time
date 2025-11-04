@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0b0215] text-white min-h-screen flex">
+
+  {{> asideAdmin
+     }}
+
+  <div class="flex-1 flex flex-col">
+    
+    <header class="flex justify-end items-center bg-[#141020] p-6 border-b border-fuchsia-700/20">
+      <span class="font-semibold text-gray-300">
+        admin {{currentAdmin.name}}
+      </span>
+    </header>
+
+    
+    <section class="relative h-[35vh] flex items-center justify-center">
+      <div class="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1518972559570-7cc1309f3229?auto=format&fit=crop&w=1400&q=80"
+          alt="Concert"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0A0614] via-black/70 to-transparent"></div>
+      </div>
+      <div class="relative text-center space-y-3">
+        <p class="text-[#A259FF] uppercase tracking-widest text-sm font-semibold">
+          New Concert
+        </p>
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight">
+          Add an Event
+        </h1>
+        <p class="text-gray-300">Fill in the information below</p>
+      </div>
+    </section>
+
+    <!-- FORMULAIRE -->
+    <section class="px-6 md:px-20 py-16">
+      <form
+        action="/concerts"
+        method="POST"
+        enctype="multipart/form-data"
+        class="bg-[#141020] p-10 rounded-2xl shadow-2xl max-w-3xl mx-auto space-y-8"
+      >
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <label class="block text-gray-400 font-medium mb-2">Title</label>
+            <input
+              type="text"
+              name="title"
+              required
+              placeholder="Concert name"
+              class="w-full bg-[#1E1A2B] border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A259FF]"
+            />
+          </div>
+
+          <div>
+            <label class="block text-gray-400 font-medium mb-2">Location</label>
+            <input
+              type="text"
+              name="location"
+              required
+              placeholder="Ex: Friendship Stadium"
+              class="w-full bg-[#1E1A2B] border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A259FF]"
+            />
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <label class="block text-gray-400 font-medium mb-2">Date</label>
+            <input
+              type="datetime-local"
+              name="dateTime"
+              required
+              class="w-full bg-[#1E1A2B] border border-gray-700 rounded-lg px-4 py-3 text-gray-300 focus:outline-none focus:ring-2 focus:ring-[#A259FF]"
+            />
+          </div>
+
+          <div>
+            <label class="block text-gray-400 font-medium mb-2">Price (FCFA)</label>
+            <input
+              type="number"
+              name="price"
+              min="0"
+              step="1"
+              placeholder="Ex: 500"
+              required
+              class="w-full bg-[#1E1A2B] border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A259FF]"
+            />
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <label class="block text-gray-400 font-medium mb-2">Available Seats</label>
+            <input
+              type="number"
+              name="available_seats"
+              min="0"
+              placeholder="Ex: 200"
+              class="w-full bg-[#1E1A2B] border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A259FF]"
+            />
+          </div>
+
+          <div>
+            <label class="block text-gray-400 font-medium mb-2">Genre</label>
+            <input
+              type="text"
+              name="genre"
+              placeholder="Ex: Afrobeat, Jazz, Rock"
+              class="w-full bg-[#1E1A2B] border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A259FF]"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-gray-400 font-medium mb-2">Guest Artists</label>
+          <input
+            type="text"
+            name="guest_artists"
+            placeholder="Ex: Fally Ipupa, Toofan, Davido"
+            class="w-full bg-[#1E1A2B] border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A259FF]"
+          />
+          <p class="text-sm text-gray-500 mt-2">
+            Separate names with commas
+          </p>
+        </div>
+
+        <div>
+          <label class="block text-gray-400 font-medium mb-2">Image</label>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            class="w-full bg-[#1E1A2B] border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A259FF]"
+          />
+        </div>
+
+
+        <!-- Selectionner les artistes -->
+        <div class="mb-6">
+          <label for="band_id" class="block text-gray-300 font-semibold mb-2">Main Artist</label>
+          <select id="band_id" name="band_id" class="w-full px-4 py-3 rounded-xl bg-[#141020] text-white focus:ring-2 focus:ring-[#A259FF] border border-gray-700">
+            <option value=" ">-- Select an artist --</option>
+             {{#each artists}}
+              <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-gray-400 font-medium mb-2">Description</label>
+          <textarea
+            name="description"
+            rows="5"
+            placeholder="Describe the concert..."
+            class="w-full bg-[#1E1A2B] border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A259FF]"
+          ></textarea>
+        </div>
+
+        <div class="pt-4 flex justify-end">
+          <button
+            type="submit"
+            class="bg-gradient-to-r from-[#A259FF] to-[#6100FF] px-10 py-3 rounded-full font-semibold text-white shadow-lg hover:opacity-90 transition"
+          >
+            Save Concert →
+          </button>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>

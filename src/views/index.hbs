@@ -1,0 +1,55 @@
+{{! index.hbs }}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ShowTime</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50">
+
+    {{> navBar
+     }}
+    
+    {{> hero 
+      subtitle="Discover Live Music"
+      title="Experience the <span class='text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-indigo-500'>Magic of Concerts</span> Near You"
+      description="Book your tickets, follow your favorite artists, and live unforgettable moments with ShowTime."
+      buttonText="Book Now"
+      buttonLink="/concerts"
+      secondaryButtonText="Browse Artists"
+      secondaryButtonLink="/artists"
+      imageUrl="/images/concert.jpg"
+      imageAlt="Crowd cheering at concert"
+    }}
+
+     {{> featuredArtists
+     artists=featuredArtists
+     }}
+
+    <section class="bg-[#0b0014] text-white py-20 px-6 text-center">
+      <p class="uppercase tracking-widest text-fuchsia-600 mb-3 text-sm">
+        Event
+      </p>
+      <h2 class="text-4xl md:text-5xl font-bold mb-14">
+        Upcoming Concerts
+      </h2>
+
+      <div class="flex flex-col gap-10 items-center w-full max-w-6xl mx-auto">
+       {{#each concerts}}
+          {{> concert-card}}
+        {{/each}}
+      </div>
+
+      <div class="mt-20">
+        <a href="/concerts" class="bg-gradient-to-r from-fuchsia-700 to-indigo-700 px-8 py-3 rounded-full text-lg font-semibold shadow-md hover:scale-105 transition-transform duration-200">
+          Find Concert
+        </a>
+      </div>
+    </section>
+
+     
+     {{> footer
+     }}
+  </body>
+</html>

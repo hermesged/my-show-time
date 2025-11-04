@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Favorites</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-[#0b0215] text-white">
+    {{> navBar }}
+
+    <section class="py-20 my-20 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-10">My Favorite Artists</h2>
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center max-w-6xl mx-auto"
+      >
+         {{#each favoriteArtists}}
+            {{> artistCard artist=this currentUserId=@root.currentUserId}}
+        {{/each}}
+      </div>
+    </section>
+
+
+     <section class="px-6 md:px-20 py-20 w-full max-w-7xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-10">My Favorite Concerts</h2>
+
+      <div
+        class="space-y-10"
+      >
+         {{#each favoriteConcerts}}
+            {{> concert-card this}}
+        {{/each}}
+      </div>
+    </section>
+
+    {{> footer }}
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<nav class="bg-[#0b0215] fixed w-full z-20 top-0 start-0 border-b border-gray-800">
+  <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-20 py-6">
+
+    <a href="/" class="flex items-center space-x-2">
+      <span class="text-2xl font-extrabold text-white tracking-wide">
+        SHOW<span class="text-fuchsia-600">TIME</span>
+      </span>
+    </a>
+
+    <div class="flex items-center space-x-3">
+      <div class="flex items-center space-x-4">
+
+        <a href="/concerts"
+          class="text-white bg-fuchsia-700 hover:bg-fuchsia-800 px-4 py-2 rounded-lg font-medium transition">
+          All Events
+        </a>
+
+        {{#if user}}
+          <a href="/favorites"
+            class="text-white border border-fuchsia-600 hover:bg-fuchsia-700/20 rounded-lg px-4 py-2 font-medium transition">
+            Favorites
+          </a>
+          <a href="/users/profile"
+            class="text-white bg-gradient-to-r from-fuchsia-700 to-indigo-700 px-4 py-2 rounded-lg font-medium transition">
+            Mon Profil
+          </a>
+        {{else}}
+          <a href="/auth/login"
+            class="text-white border border-fuchsia-600 hover:bg-fuchsia-700/20 rounded-lg px-4 py-2 font-medium transition">
+            Login
+          </a>
+          <a href="/auth/register"
+            class="text-white bg-gradient-to-r from-fuchsia-700 to-indigo-700 px-4 py-2 rounded-lg font-medium transition">
+            Register
+          </a>
+        {{/if}}
+
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0b0215] text-white min-h-screen flex">
+
+  {{> asideAdmin
+     }}
+
+  <div class="flex-1 flex flex-col">
+    
+    <header class="flex justify-end items-center bg-[#141020] p-6 border-b border-fuchsia-700/20">
+      <span class="font-semibold text-gray-300">
+        admin {{currentAdmin.name}}
+      </span>
+    </header>
+    
+  <!-- Main content -->
+  <main class="flex-1 p-8">
+    <header class="flex justify-between items-center mb-8 border-b border-fuchsia-700/20 pb-4">
+      <h2 class="text-2xl font-bold text-white">All Artists</h2>
+      <a href="/artists/new" class="px-4 py-2 bg-fuchsia-600 hover:bg-fuchsia-500 rounded text-white font-semibold transition">
+        Add Artist
+      </a>
+    </header>
+
+    {{#if message}}
+      <div class="mb-4 px-4 py-2 bg-green-600 text-white rounded">{{message}}</div>
+    {{/if}}
+    {{#if errors}}
+      {{#each errors}}
+        <div class="mb-2 px-4 py-2 bg-red-600 text-white rounded">{{this}}</div>
+      {{/each}}
+    {{/if}}
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full border border-fuchsia-700/30 rounded-lg overflow-hidden">
+        <thead class="bg-[#1d0a38]">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-fuchsia-300 uppercase tracking-wider border-b border-fuchsia-700/30">Name</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-fuchsia-300 uppercase tracking-wider border-b border-fuchsia-700/30">Genre</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-fuchsia-300 uppercase tracking-wider border-b border-fuchsia-700/30">Description</th>
+            <th class="px-6 py-3 text-center text-sm font-semibold text-fuchsia-300 uppercase tracking-wider border-b border-fuchsia-700/30">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each artists}}
+          <tr class="hover:bg-[#1a0f2f] transition">
+            <td class="px-6 py-4 whitespace-nowrap text-gray-200 font-medium">{{this.name}}</td>
+            <td class="px-6 py-4 text-gray-400">{{this.genre}}</td>
+            <td class="px-6 py-4 text-gray-400 max-w-xs truncate">{{this.description}}</td>
+            <td class="px-6 py-4 flex justify-center gap-3">
+              <a href="/artists/{{this._id}}/edit"
+                 class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 rounded text-white text-sm transition">
+                Edit
+              </a>
+             <form action="/artists/{{this._id}}/delete" method="POST" onsubmit="return confirm('Delete this artist?');">
+              <button type="submit" class="px-3 py-1.5 bg-red-600 hover:bg-red-500 rounded text-white text-sm transition">
+                Delete
+              </button>
+            </form>
+
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+</body>
+</html>

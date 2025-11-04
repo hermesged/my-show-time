@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0b0215] text-white min-h-screen flex">
+
+  {{> asideAdmin
+     }}
+
+  <div class="flex-1 flex flex-col">
+    
+    <header class="flex justify-end items-center bg-[#141020] p-6 border-b border-fuchsia-700/20">
+      <span class="font-semibold text-gray-300">
+        admin {{currentAdmin.name}}
+      </span>
+    </header>
+
+  <!-- Main content -->
+  <main class="flex-1 p-8">
+    <header class="flex justify-between items-center mb-8 border-b border-fuchsia-700/20 pb-4">
+      <h2 class="text-2xl font-bold text-white">All Concerts</h2>
+      <a href="/concerts/new" class="px-4 py-2 bg-fuchsia-600 hover:bg-fuchsia-500 rounded text-white font-semibold transition">
+        Add Concert
+      </a>
+    </header>
+
+    {{#if message}}
+      <div class="mb-4 px-4 py-2 bg-green-600 text-white rounded">{{message}}</div>
+    {{/if}}
+    {{#if errors}}
+      {{#each errors}}
+        <div class="mb-2 px-4 py-2 bg-red-600 text-white rounded">{{this}}</div>
+      {{/each}}
+    {{/if}}
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-700">
+        <thead class="bg-[#12052b]">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-300">Title</th>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-300">Genre</th>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-300">Location</th>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-300">Date</th>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-300">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-[#141020] divide-y divide-gray-700">
+          {{#each concerts}}
+          <tr>
+            <td class="px-6 py-4 text-sm">{{this.title}}</td>
+            <td class="px-6 py-4 text-sm">{{this.genre}}</td>
+            <td class="px-6 py-4 text-sm">{{this.location}}</td>
+            <td class="px-6 py-4 text-sm">{{this.date}}</td>
+            <td class="px-6 py-4 text-sm flex gap-2">
+              <a href="/concerts/{{this._id}}/edit" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 rounded text-white text-sm transition">
+                Edit
+              </a>
+              <form action="/concerts/{{this._id}}/delete" method="POST" onsubmit="return confirm('Delete this concert?');">
+                <button type="submit" class="px-3 py-1.5 bg-red-600 hover:bg-red-500 rounded text-white text-sm transition">
+                  Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>

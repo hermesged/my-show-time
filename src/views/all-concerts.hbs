@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Concert Section</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-[#0A0614] text-white font-sans">
+     {{> navBar
+     }}
+    <!-- SECTION -->
+    <section class="px-6 md:px-20 py-20 w-full max-w-7xl mx-auto">
+
+      <!-- Search + Filter Section -->
+      <form action="/concerts" method="GET" class="mb-12">
+        <div class="bg-[#141020] p-6 rounded-2xl shadow-xl flex flex-col md:flex-row items-center gap-6">
+
+          <!-- Search Bar -->
+          <div class="relative w-full">
+            <input
+              type="text"
+              name="search"
+              value="{{search}}"
+              placeholder="Search concerts, bands, locations..."
+              class="w-full bg-[#0E0A18] text-white placeholder-gray-400 px-5 py-3 rounded-xl border border-[#2A223A] focus:outline-none focus:ring-2 focus:ring-[#A259FF] transition"
+            />
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"/>
+            </svg>
+          </div>
+
+          <!-- Genre Filter -->
+          <select
+            name="genre"
+            class="w-full md:w-60 bg-[#0E0A18] text-white px-5 py-3 rounded-xl border border-[#2A223A] focus:outline-none focus:ring-2 focus:ring-[#A259FF] transition"
+          >
+            <option value="">Filter by genre</option>
+            <option value="afro" {{#ifCond genre 'afro'}}selected{{/ifCond}}>Afro</option>
+            <option value="blues" {{#ifCond genre 'blues'}}selected{{/ifCond}}>Blues</option>
+            <option value="classical" {{#ifCond genre 'classical'}}selected{{/ifCond}}>Classical</option>
+            <option value="country" {{#ifCond genre 'country'}}selected{{/ifCond}}>Country</option>
+            <option value="electro" {{#ifCond genre 'electro'}}selected{{/ifCond}}>Electro</option>
+            <option value="gospel" {{#ifCond genre 'gospel'}}selected{{/ifCond}}>Gospel</option>
+            <option value="jazz" {{#ifCond genre 'jazz'}}selected{{/ifCond}}>Jazz</option>
+            <option value="pop" {{#ifCond genre 'pop'}}selected{{/ifCond}}>Pop</option>
+            <option value="punk" {{#ifCond genre 'punk'}}selected{{/ifCond}}>Punk</option>
+            <option value="rap" {{#ifCond genre 'rap'}}selected{{/ifCond}}>Rap</option>
+            <option value="rnb" {{#ifCond genre 'rnb'}}selected{{/ifCond}}>R&B</option>
+            <option value="reggae" {{#ifCond genre 'reggae'}}selected{{/ifCond}}>Reggae</option>
+            <option value="salsa" {{#ifCond genre 'salsa'}}selected{{/ifCond}}>Salsa</option>
+            <option value="soul" {{#ifCond genre 'soul'}}selected{{/ifCond}}>Soul</option>
+            <option value="folk" {{#ifCond genre 'folk'}}selected{{/ifCond}}>Folk</option>
+            <option value="metal" {{#ifCond genre 'metal'}}selected{{/ifCond}}>Metal</option>
+
+          </select>
+
+          <!-- Artist Filter -->
+          <select
+            name="artist"
+            class="w-full md:w-60 bg-[#0E0A18] text-white px-5 py-3 rounded-xl border border-[#2A223A] focus:outline-none focus:ring-2 focus:ring-[#A259FF] transition"
+          >
+            <option value="">Filter by artist</option>
+            {{#each artists}}
+              <option value="{{this._id}}" {{#ifCond ../artist this._id}}selected{{/ifCond}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+
+          <!-- Year Filter -->
+          <select
+            name="year"
+            class="w-full md:w-40 bg-[#0E0A18] text-white px-5 py-3 rounded-xl border border-[#2A223A] focus:outline-none focus:ring-2 focus:ring-[#A259FF] transition"
+          >
+            <option value="">Filter by year</option>
+            {{#each years}}
+              <option value="{{this}}" {{#ifCond ../year this}}selected{{/ifCond}}>{{this}}</option>
+            {{/each}}
+          </select>
+
+          <!-- Search Button -->
+          <button
+            type="submit"
+            class="bg-gradient-to-r from-[#A259FF] to-[#6100FF] px-10 py-3 rounded-xl font-semibold shadow-lg hover:opacity-90 transition w-full md:w-auto"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+
+      <!-- Event Cards -->
+      <div class="space-y-10">
+        {{#each concerts}}
+          {{> concert-card}}
+        {{/each}}
+      </div>
+    </section>
+    {{> footer
+     }}
+  </body>
+</html>

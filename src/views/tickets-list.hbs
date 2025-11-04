@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bookings</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Liste des Bookings</h1>
+  <ul>
+    {{#each bookings}}
+      <li>
+        Booking #{{_id}} - {{ticketsCount}} tickets - Status: {{status}}
+        <img src="{{qrCode}}" alt="QR Code" width="100">
+      </li>
+    {{/each}}
+  </ul>
+</body>
+</html>

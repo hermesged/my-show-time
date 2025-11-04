@@ -1,0 +1,74 @@
+<div class="relative overflow-hidden rounded-2xl group shadow-xl bg-black">
+  <img
+    src="{{artist.image}}"
+    alt="{{artist.name}}"
+    class="w-full h-[400px] object-cover transform group-hover:scale-105 transition duration-300"
+  />
+
+  <div
+    class="absolute bottom-0 left-0 right-0 bg-black/70 p-5 text-left rounded-t-2xl backdrop-blur-md"
+  >
+    <h3 class="text-lg font-bold text-white">{{artist.name}}</h3>
+    <p class="text-sm text-gray-400">{{artist.genre}}</p>
+  </div>
+
+  <div class="absolute top-3 right-3">
+    <button
+      class="favorite-btn border border-fuchsia-600 text-white rounded-lg px-3 py-1 bg-[#0A0F1F] hover:bg-[#1A2240] transition-colors"
+      data-artist-id="{{artist._id}}"
+      data-followed="{{artist.isFavorite}}"
+    >
+      {{#if artist.isFavorite}}Unfollow{{else}}Follow{{/if}}
+    </button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const userId = '{{@root.currentUserId}}';
+  document.querySelectorAll('.favorite-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const artistId = btn.dataset.artistId;
+      const isFollowed = btn.dataset.followed === 'true';
+
+      if (!userId) {
+        alert('You must be logged in to follow artists.');
+        return;
+      }
+
+      try {
+        if (!isFollowed) {
+          const res = await fetch('/favorites/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ artist_id: artistId }),
+          });
+
+          if (res.ok) {
+            btn.textContent = 'Unfollow';
+            btn.dataset.followed = 'true';
+          } else {
+            const data = await res.json();
+            alert(data.message || 'Failed to follow artist.');
+          }
+        } else {
+          const res = await fetch(`/favorites/${artistId}`, {
+            method: 'DELETE',
+          });
+
+          if (res.ok) {
+            btn.textContent = 'Follow';
+            btn.dataset.followed = 'false';
+          } else {
+            const data = await res.json();
+            alert(data.message || 'Failed to unfollow artist.');
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Something went wrong. Please try again.');
+      }
+    });
+  });
+});
+</script>
