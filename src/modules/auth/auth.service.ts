@@ -27,8 +27,7 @@ export class AuthService {
     const payload = { email: user.email };
     const token = this.jwtService.sign(payload, { expiresIn: '1d' });
 
-    const verificationLink = `http://localhost:3000/auth/verify?token=${token}`;
-
+    const verificationLink = `${process.env.APP_URL}/auth/verify?token=${token}`;
 
     await this.mailService.sendMail(
       user.email,

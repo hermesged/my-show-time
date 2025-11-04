@@ -30,10 +30,10 @@ export class PaymentsService {
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:3000/payments/success',
-      cancel_url: 'http://localhost:3000/payments/failure',
+     success_url: `${process.env.APP_URL}/payments/success`,
+    cancel_url: `${process.env.APP_URL}/payments/failure`,
     });
 
-    return res.redirect(303, session.url || 'http://localhost:3000');
+    return res.redirect(303, session.url || process.env.APP_URL!);
   }
 }
