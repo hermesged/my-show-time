@@ -41,7 +41,7 @@ async function bootstrap() {
       cookie: {
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-        secure: false, // tu pourras mettre true si HTTPS sur Render
+        secure: true,
       },
     }),
   );
@@ -79,7 +79,6 @@ async function bootstrap() {
     return `${year}-${month}-${day} | ${hours}:${minutes} GMT`;
   });
 
-  // Port dynamique pour Render
   const port = process.env.PORT ?? 3000;
   await app.listen(port, '0.0.0.0');
   console.log(`Application running on port ${port}`);
